@@ -1,5 +1,7 @@
 package pt.europeia.dominate.controllers;
 
+import java.util.Arrays;
+
 import javafx.animation.AnimationTimer;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
@@ -45,30 +47,34 @@ public class GameController {
 
 
 	}
-	
+
 	/**
 	 * Updates the canvas
 	 */
 	public void update() {
 		for(int i = 0; i < game.getTable().length; i++) {
-			
+
 			for(int j = 0; j < game.getTable().length; j++) {
-				
+
 				if(game.getTable()[i][j] == pieces.BLACK) {
 					gc.setFill(Color.BLACK);
 					gc.fillOval(i*square, j*square, square, square);
-				} else
-					if(game.getTable()[i][j] == pieces.WHITE) {
-						gc.setFill(Color.RED);
-						gc.fillOval(i*square, j*square, square, square);
-					}
-				
+				} else if(game.getTable()[i][j] == pieces.WHITE) {
+					gc.setFill(Color.RED);
+					gc.fillOval(i*square, j*square, square, square);
+				}
+
 			}
 		}
-		
+
 		p1.setText(game.getP1Score()+"");
 		p2.setText(game.getP2Score()+"");
 		
+		System.out.println(game.getTurn());
+		for (Object each : game.getTablePlays()) {
+			System.out.println(Arrays.toString((int[])each));
+		}
+
 	}
 
 	public void move(MouseEvent event) {
@@ -88,10 +94,10 @@ public class GameController {
 				break;
 			}		
 		}
-
-		if(game.getTable()[x][y] == null) {
-			game.move(x, y);
-			update();
-		}
+		
+		System.out.println("cell: " + x + " ; " + y);
+		
+		game.move(x, y);
+		update();
 	}
 }
