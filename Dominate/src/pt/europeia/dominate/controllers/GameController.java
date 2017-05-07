@@ -8,6 +8,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import pt.europeia.dominate.application.Dominate;
+import pt.europeia.dominate.application.Dominate.pieces;
 
 public class GameController {
 
@@ -53,11 +54,11 @@ public class GameController {
 			
 			for(int j = 0; j < game.getTable().length; j++) {
 				
-				if(game.getTable()[i][j] == 1) {
+				if(game.getTable()[i][j] == pieces.BLACK) {
 					gc.setFill(Color.BLACK);
 					gc.fillOval(i*square, j*square, square, square);
 				} else
-					if(game.getTable()[i][j] == 2) {
+					if(game.getTable()[i][j] == pieces.WHITE) {
 						gc.setFill(Color.RED);
 						gc.fillOval(i*square, j*square, square, square);
 					}
@@ -88,7 +89,7 @@ public class GameController {
 			}		
 		}
 
-		if(game.getTable()[x][y] == 0) {
+		if(game.getTable()[x][y] == null) {
 			game.move(x, y);
 			update();
 		}
