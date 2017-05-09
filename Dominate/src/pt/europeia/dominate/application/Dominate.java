@@ -57,6 +57,7 @@ public class Dominate {
 	//Verifies the playable positions
 	public void verify() {
 
+		//Reset this arrays
 		toEat = new ArrayList<ArrayList>();
 
 		//Reset this arrays
@@ -89,17 +90,20 @@ public class Dominate {
 							continue;
 						}
 
+						//The holy iteration
 						for(int k = i+n, p = j+m; k > 0 && p > 0 && k < 8 && p < 8 && table[i][j] == turn && table[k][p] == turn.opposite(); k += n , p += m) {
 
 							//Verifies if the next cell in the direction that is going is null if so it's a playable cell
 							if(k+n < 8 && p+m < 8 && table[k+n][p+m] == null) {
-								
+
 								int[] temps = {k+n,p+m};
 								tablePlays.add(temps);
-								
+
 								ArrayList<int[]> tempEatable = new ArrayList<int[]>();
+
+								//Adds pieces position to eat relative to the played position
 								while(k != i || p != j) {
-									
+
 									tempEatable.add(new int[] {
 											k,p
 									});
@@ -118,6 +122,24 @@ public class Dominate {
 
 	}
 
+	public void eat(int i, int j) {
+		//Temporary cell holder
+		int[] temporary = {i,j};
+
+		for(Object each : tablePlays) {
+
+			if(Arrays.equals((int[])each, temporary)) {
+				table[i][j] = turn;
+
+				ArrayList<int[]> eat = toEat.get(tablePlays.indexOf(each));
+
+				for(int q = 0; q < eat.size(); q++) {
+					table[eat.get(q)[0]][eat.get(q)[1]] = turn;
+				}
+			} 
+		}		
+	}
+
 	/**
 	 * Makes a move on the table
 	 * @param i move x location
@@ -125,20 +147,12 @@ public class Dominate {
 	 */
 	public void move(int i, int j) {
 
-		int[] temporary = {i,j};
+		if(tablePlays.size() == 0) {
+			turn = turn.opposite();
+			verify();
+		}			
 
-		for(Object each : tablePlays) {
-			
-			if(Arrays.equals((int[])each, temporary)) {
-				table[i][j] = turn;
-				
-				ArrayList<int[]> eat = toEat.get(tablePlays.indexOf(each));
-				
-				for(int q = 0; q < eat.size(); q++) {
-					table[eat.get(q)[0]][eat.get(q)[1]] = turn;
-				}
-			} 
-		}		
+		eat(i,j);
 
 		if(table[i][j] == null) {
 			return;
