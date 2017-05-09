@@ -1,15 +1,17 @@
 package pt.europeia.dominate.controllers;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 
-import javafx.animation.AnimationTimer;
 import javafx.fxml.FXML;
+import javafx.geometry.Orientation;
+import javafx.scene.Group;
+import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import pt.europeia.dominate.application.Dominate;
 import pt.europeia.dominate.application.Dominate.pieces;
 
@@ -110,5 +112,19 @@ public class GameController {
 		game.move(x, y);
 		pturn.setText(""+game.getTurn());
 		update();
+		
+		//End of the game
+		if((game.getP1Score() + game.getP2Score()) == 64) {
+			Group bp = new Group();
+			Text winner = new Text(20,30, game.getWinner() + "'s " + "WON");
+			bp.getChildren().add(winner);
+			Scene scene = new Scene(bp,100,50);
+			Stage stage = new Stage();
+			stage.setScene(scene);
+			stage.show();
+		}
+			
 	}
+	
+	
 }

@@ -168,29 +168,10 @@ public class Dominate {
 	 * Determines the winner
 	 * @return
 	 */
-	public int dominator() {
-
-		Player temp = new Player();
-		int winner = 0;
-
-		//Verifies who is the player with most points
-		for (int i = 0; i < players.length; i++) {
-			if (temp.getPoints() < players[i].getPoints()) {
-				temp = players[i];
-				winner = i;
-			}
-		}
-
-		return winner;
+	public pieces getWinner() {
+		pieces winner;
+		return winner = (players[0].getPoints() > players[1].getPoints()) ? pieces.WHITE : pieces.BLACK;
 	}
-
-	/*public static void main(String [] args) {
-
-		Dominate a = new Dominate();
-		for(Object temp : a.getTablePlays()) {
-			System.out.println(Arrays.toString((int[])temp));
-		}
-	}*/
 
 	public int getP1Score() {
 		return players[0].getPoints();
