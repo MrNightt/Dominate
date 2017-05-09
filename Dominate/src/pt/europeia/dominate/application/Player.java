@@ -12,6 +12,14 @@ public class Player {
 	public void setPoints(int points) {
 		this.points = points;
 	}
+	
+	public void resetPoints() {
+		this.points = 0;
+	}
+	
+	public void addPoint() {
+		this.points += 1;
+	}
 
 	public int getMoves() {
 		return moves;
