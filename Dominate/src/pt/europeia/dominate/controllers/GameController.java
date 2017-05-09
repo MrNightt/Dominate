@@ -1,5 +1,6 @@
 package pt.europeia.dominate.controllers;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import javafx.animation.AnimationTimer;
@@ -24,6 +25,9 @@ public class GameController {
 
 	@FXML
 	Text p1, p2;
+	
+	@FXML
+	Text pturn;
 
 	@FXML
 	public void initialize() {
@@ -42,6 +46,7 @@ public class GameController {
 
 		p1.setText(game.getP1Score()+"");
 		p2.setText(game.getP2Score()+"");
+		pturn.setText(game.getTurn()+"");
 
 		update();
 
@@ -60,12 +65,17 @@ public class GameController {
 					gc.setFill(Color.BLACK);
 					gc.fillOval(i*square, j*square, square, square);
 				} else if(game.getTable()[i][j] == pieces.WHITE) {
-					gc.setFill(Color.RED);
+					gc.setFill(Color.WHITE);
+					gc.strokeOval(i*square, j*square, square, square);
 					gc.fillOval(i*square, j*square, square, square);
 				}
 
 			}
 		}
+		
+		/*for(int i = 0; i < game.getTablePlays().size(); i++) {
+			gc.fillOval(game.getTablePlays().get(i), game.getTablePlays().get(i), square/3, square/3);
+		}*/
 
 		p1.setText(game.getP1Score()+"");
 		p2.setText(game.getP2Score()+"");
@@ -98,6 +108,7 @@ public class GameController {
 		System.out.println("cell: " + x + " ; " + y);
 		
 		game.move(x, y);
+		pturn.setText(""+game.getTurn());
 		update();
 	}
 }

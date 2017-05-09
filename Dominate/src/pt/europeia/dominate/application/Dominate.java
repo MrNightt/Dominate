@@ -91,26 +91,26 @@ public class Dominate {
 						}
 
 						//The holy iteration
-						for(int k = i+n, p = j+m; k > 0 && p > 0 && k < 8 && p < 8 && table[i][j] == turn && table[k][p] == turn.opposite(); k += n , p += m) {
+						for(int k = i+n, p = j+m; k >= 0 && p >= 0 && k < 8 && p < 8 && table[i][j] == turn && table[k][p] == turn.opposite(); k += n , p += m) {
 
 							//Verifies if the next cell in the direction that is going is null if so it's a playable cell
-							if(k+n < 8 && p+m < 8 && table[k+n][p+m] == null) {
+							if(k+n >= 0 && p+m >= 0 && k+n < 8 && p+m < 8 && table[k+n][p+m] == null) {
 
 								int[] temps = {k+n,p+m};
 								tablePlays.add(temps);
 
-								ArrayList<int[]> tempEatable = new ArrayList<int[]>();
+								ArrayList<int[]> tempToEat = new ArrayList<int[]>();
 
 								//Adds pieces position to eat relative to the played position
 								while(k != i || p != j) {
 
-									tempEatable.add(new int[] {
+									tempToEat.add(new int[] {
 											k,p
 									});
 									k -= n;
 									p -= m;
 								}
-								toEat.add(tempEatable);					
+								toEat.add(tempToEat);					
 								break;
 							}
 
@@ -126,6 +126,7 @@ public class Dominate {
 		//Temporary cell holder
 		int[] temporary = {i,j};
 
+		//for each cell playable position of tablePLays
 		for(Object each : tablePlays) {
 
 			if(Arrays.equals((int[])each, temporary)) {
@@ -150,15 +151,14 @@ public class Dominate {
 		if(tablePlays.size() == 0) {
 			turn = turn.opposite();
 			verify();
+			return;
 		}			
 
 		eat(i,j);
 
-		if(table[i][j] == null) {
-			return;
+		if(table[i][j] == turn) {
+			turn = turn.opposite();
 		}
-
-		turn = turn.opposite();
 
 		verify();
 
@@ -210,6 +210,10 @@ public class Dominate {
 
 	public ArrayList getTablePlays() {
 		return tablePlays;
+	}
+	
+	public ArrayList<ArrayList> getToEat() {
+		return toEat;
 	}
 
 }
